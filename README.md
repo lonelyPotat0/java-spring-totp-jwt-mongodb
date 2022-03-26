@@ -13,9 +13,9 @@
 ### Run project 
 
 ```console
-	mvn clean install
-	docker-compose up -d //start mongodb server
-	mvn spring-boot:run
+mvn clean install
+docker-compose up -d //start mongodb server
+mvn spring-boot:run
 ```
 	  or just use intellij/eclipse
 	  server run on port 8080
