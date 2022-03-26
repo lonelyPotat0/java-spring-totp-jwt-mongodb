@@ -14,7 +14,7 @@ public class AuthKeySecret {
     public void setQrCodeFormat(String username) {
         this.qrCodeFormat = "otpauth://totp/Potato:"+ username + "?secret=" + this.authkey +"&issuer=Potato";
     }
-    public String getQrCodeFormat(String username) {
+    public String getQrCodeFormat() {
         return this.qrCodeFormat;
     }
 }
