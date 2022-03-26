@@ -1,4 +1,4 @@
-# Java Spring JWT + Authenticator APP With MongoDB
+# Java Spring + JWT + Authenticator APP With MongoDB
 
 ## Initiate project
 
@@ -17,13 +17,18 @@
 	docker-compose up -d
 	mvn spring-boot:run
 ```
-	  or just use intellij
+	  or just use intellij/eclipse
+	  server run on port 8080
 
-### Using 
+## Using 
+
+ All requests are post request 
 
 #### Signup
+
+path
 ```
- /auth/sigup
+ /api/auth/signup
 ```
 body
 ```json
@@ -32,29 +37,58 @@ body
   "password": "123456"
 }
 ```
-#### Signpin
+#### Signin
+
+path
 ```
- /auth/sigin
+  /api/auth/signin
 ```
 body
 ```json
 {
   "username": "dom",
   "password": "123456",
-  "TOTP": "324321" // TOTP is optional
+  "TOTP": "324321" // TOTP is optional, only require when 2fa is enabled
 }
 ```
-#### Request Enable 
+#### Request Authkey 
+
+path
 ```
- /auth/sigup
+ /totp/request-authkey
+```
+ * Require Bearer token
+
+
+#### Request enable 2-factor authentication
+
+ * First register secret key (authKey) in authenticator app
+
+path
+```
+ /totp/enable
 ```
 body
 ```json
 {
-  "username": "dom",
-  "password": "123456"
+  "TOTP": "123123"  // code from authenticator app 
 }
 ```
+ * Require Bearer token
+
+#### Request disable 2-factor authentication
+
+path
+```
+ /totp/disable
+```
+body
+```json
+{
+  "TOTP": "123123"  // code from authenticator app 
+}
+```
+ * Require Bearer token
 
 
 
