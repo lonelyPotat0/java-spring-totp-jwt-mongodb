@@ -18,6 +18,7 @@
 	mvn spring-boot:run
 ```
 	  or just use intellij
+	  server run on port 8080
 
 ### Using 
 
