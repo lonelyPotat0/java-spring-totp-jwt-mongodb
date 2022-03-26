@@ -25,6 +25,8 @@
  All requests are post request 
 
 #### Signup
+
+path
 ```
  /api/auth/signup
 ```
@@ -36,6 +38,8 @@ body
 }
 ```
 #### Signin
+
+path
 ```
   /api/auth/signin
 ```
@@ -48,6 +52,8 @@ body
 }
 ```
 #### Request Authkey 
+
+path
 ```
  /totp/request-authkey
 ```
@@ -58,6 +64,7 @@ body
 
 register secret key (authKey) in authenticator app
 
+path
 ```
  /totp/enable
 ```
@@ -71,8 +78,7 @@ body
 
 #### Request disable 2-factor authentication
 
-register secret key (authKey) in authenticator app
-
+path
 ```
  /totp/disable
 ```
