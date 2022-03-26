@@ -1,9 +1,11 @@
 package com.example.demo.services;
 
 import com.example.demo.models.User;
+import com.example.demo.payload.Responses.AuthKeySecret;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.ultils.TOTPTool;
 import com.example.demo.ultils.TokenTool;
+import com.google.zxing.NotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +47,15 @@ public class TotpService {
         }
         return success;
         // return false;
+    }
+
+    public AuthKeySecret getAuthKey(String bearer) throws Exception {
+        String username = this.tokenTool.getUsernameFromToken(bearer);
+        if(!this.usernameIsExist(username)) throw new Exception("username not found");
+        User user = userRepository.findByUsername(username);
+        AuthKeySecret secret = new AuthKeySecret();
+        secret.setAuthKey(user.getAuthKey());
+        return secret;
     }
 
     private Boolean usernameIsExist(String username) {

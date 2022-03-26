@@ -42,4 +42,11 @@ public class TotpController {
         }
         return ResponseEntity.badRequest().body("unsuccess");
     }
+
+    @PostMapping("request-authkey")
+    public ResponseEntity<?> requestSecret(@RequestHeader("Authorization") String bearer) throws Exception {
+        return ResponseEntity.ok(this.totpService.getAuthKey(bearer));
+    }
+
+
 }
