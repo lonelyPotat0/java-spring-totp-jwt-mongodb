@@ -1,4 +1,4 @@
-# Java Spring + JWT + Authenticator APP With MongoDB
+# Java Spring + JWT + TOTP With MongoDB
 
 ## Initiate project
 
