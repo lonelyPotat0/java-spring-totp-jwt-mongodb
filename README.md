@@ -51,6 +51,15 @@ body
   "TOTP": "324321" // TOTP is optional, only require when 2fa is enabled
 }
 ```
+
+#### Check 2FA Status 
+
+path
+```
+ /totp/check-2fa-status
+```
+ * Require Bearer token
+
 #### Request Authkey 
 
 path
