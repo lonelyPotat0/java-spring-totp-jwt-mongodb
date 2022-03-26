@@ -43,7 +43,7 @@ body
 {
   "username": "dom",
   "password": "123456",
-  "TOTP": "324321" // TOTP is optional
+  "TOTP": "324321" // TOTP is optional, only require when 2fa is enabled
 }
 ```
 #### Request Authkey 
