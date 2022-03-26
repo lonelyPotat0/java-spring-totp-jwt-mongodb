@@ -48,7 +48,7 @@ body
 {
   "username": "dom",
   "password": "123456",
-  "TOTP": "324321" // TOTP is optional, only require when 2fa is enabled
+  "TOTP": "324321" // code from authenticator app, is optional, only require when 2fa is enabled
 }
 ```
 
