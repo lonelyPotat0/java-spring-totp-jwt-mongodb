@@ -25,7 +25,7 @@
 
 #### Signup
 ```
- /api/auth/sigup
+ /api/auth/signup
 ```
 body
 ```json
@@ -36,7 +36,7 @@ body
 ```
 #### Signpin
 ```
-  /api/auth/sigin
+  /api/auth/signin
 ```
 body
 ```json
