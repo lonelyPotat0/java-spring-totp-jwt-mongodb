@@ -14,7 +14,7 @@
 
 ```console
 	mvn clean install
-	docker-compose up -d
+	docker-compose up -d // start mongodb server
 	mvn spring-boot:run
 ```
 	  or just use intellij/eclipse
