@@ -62,7 +62,7 @@ path
 
 #### Request enable 2-factor authentication
 
-register secret key (authKey) in authenticator app
+ * First register secret key (authKey) in authenticator app
 
 path
 ```
