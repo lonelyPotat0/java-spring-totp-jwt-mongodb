@@ -34,7 +34,7 @@ body
   "password": "123456"
 }
 ```
-#### Signpin
+#### Signin
 ```
   /api/auth/signin
 ```
