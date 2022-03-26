@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.models.User;
 import com.example.demo.payload.Responses.AuthKeySecret;
+import com.example.demo.payload.Responses.TfaStatus;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.ultils.TOTPTool;
 import com.example.demo.ultils.TokenTool;
@@ -57,6 +58,15 @@ public class TotpService {
         secret.setAuthKey(user.getAuthKey());
         secret.setQrCodeFormat(username);
         return secret;
+    }
+
+    public TfaStatus getEnableStatus(String bearer) throws Exception {
+        String username = this.tokenTool.getUsernameFromToken(bearer);
+        if(!this.usernameIsExist(username)) throw new Exception("username not found");
+        User user = userRepository.findByUsername(username);
+        TfaStatus status = new TfaStatus();
+        status.setEnabled(user.isTfa());
+        return status;
     }
 
     private Boolean usernameIsExist(String username) {

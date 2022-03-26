@@ -48,5 +48,10 @@ public class TotpController {
         return ResponseEntity.ok(this.totpService.getAuthKey(bearer));
     }
 
+    @PostMapping("check-2fa-status")
+    public ResponseEntity<?> requestStatus(@RequestHeader("Authorization") String bearer) throws Exception {
+        return ResponseEntity.ok(this.totpService.getEnableStatus(bearer));
+    }
+
 
 }
