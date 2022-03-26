@@ -55,6 +55,7 @@ public class TotpService {
         User user = userRepository.findByUsername(username);
         AuthKeySecret secret = new AuthKeySecret();
         secret.setAuthKey(user.getAuthKey());
+        secret.getQrCodeFormat(username);
         return secret;
     }
 
