@@ -21,9 +21,11 @@
 
 ### Using 
 
+ All requests are post request 
+
 #### Signup
 ```
- /auth/sigup
+ /api/auth/sigup
 ```
 body
 ```json
@@ -34,7 +36,7 @@ body
 ```
 #### Signpin
 ```
- /auth/sigin
+  /api/auth/sigin
 ```
 body
 ```json
@@ -44,17 +46,42 @@ body
   "TOTP": "324321" // TOTP is optional
 }
 ```
-#### Request Enable 
+#### Request Authkey 
 ```
- /auth/sigup
+ /totp/request-authkey
+```
+ * Require Bearer token
+
+
+#### Request enable 2-factor authentication
+
+register secret key (authKey) in authenticator app
+
+```
+ /totp/enable
 ```
 body
 ```json
 {
-  "username": "dom",
-  "password": "123456"
+  "TOTP": "123123"  // code from authenticator app 
 }
 ```
+ * Require Bearer token
+
+#### Request disable 2-factor authentication
+
+register secret key (authKey) in authenticator app
+
+```
+ /totp/disable
+```
+body
+```json
+{
+  "TOTP": "123123"  // code from authenticator app 
+}
+```
+ * Require Bearer token
 
 
 
