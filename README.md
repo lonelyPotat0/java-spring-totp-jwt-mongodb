@@ -17,7 +17,7 @@
 	docker-compose up -d
 	mvn spring-boot:run
 ```
-	  or just use intellij
+	  or just use intellij/eclipse
 	  server run on port 8080
 
 ## Using 
