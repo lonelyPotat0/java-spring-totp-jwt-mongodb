@@ -10,4 +10,4 @@ services:
     environment:
       - MONGO_INITDB_DATABASE=test
       - MONGO_INITDB_ROOT_USERNAME=dom
-      - MONGO_INITDB_ROOT_PASSWORD=123dom@dom
+      - MONGO_INITDB_ROOT_PASSWORD=123
