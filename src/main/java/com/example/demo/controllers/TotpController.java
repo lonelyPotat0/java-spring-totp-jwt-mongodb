@@ -17,30 +17,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/totp")
 public class TotpController {
     
-    // @Autowired
-    // UserRepository userRepository;
-
     @Autowired
     TotpService totpService;
 
     TokenTool tokenTool = new TokenTool();
 
     @PostMapping("enable")
-    public ResponseEntity<?> enableTOTP(@RequestHeader("Authorization") String bearer, @RequestBody TOTP totp) {
-        Boolean success = this.totpService.enableTFA(bearer, totp.getTOTP());
-        if (success) {
-            return ResponseEntity.ok("success");
-        }
-        return ResponseEntity.badRequest().body("unsuccess");
+    public ResponseEntity<?> enableTOTP(@RequestHeader("Authorization") String bearer, @RequestBody TOTP totp) throws Exception {
+        return this.totpService.enableTFA(bearer, totp.getTOTP());
     }
 
     @PostMapping("disable")
-    public ResponseEntity<?> disableTOTP(@RequestHeader("Authorization") String bearer, @RequestBody TOTP totp) {
-        Boolean success = this.totpService.disableTFA(bearer, totp.getTOTP());
-        if (success) {
-            return ResponseEntity.ok("success");
-        }
-        return ResponseEntity.badRequest().body("unsuccess");
+    public ResponseEntity<?> disableTOTP(@RequestHeader("Authorization") String bearer, @RequestBody TOTP totp) throws Exception {
+        return this.totpService.disableTFA(bearer, totp.getTOTP());
     }
 
     @PostMapping("request-authkey")

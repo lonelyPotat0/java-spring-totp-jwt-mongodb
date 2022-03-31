@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 
 public class LoginRequest {
     @NotBlank(message = "Username can't be empty")
-    @Size(min = 6, max = 25, message = "About Me must be between 6 and 25 characters")
+    @Size(min = 3, max = 25, message = "About Me must be between 6 and 25 characters")
     public String username;
 
     @NotBlank(message = "Password can't be empty")
