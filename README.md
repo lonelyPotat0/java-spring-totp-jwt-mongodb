@@ -13,9 +13,9 @@
 ### Run project 
 
 ```console
-	mvn clean install
-	docker-compose up -d
-	mvn spring-boot:run
+mvn clean install
+docker-compose up -d //start mongodb server
+mvn spring-boot:run
 ```
 	  or just use intellij/eclipse
 	  server run on port 8080
@@ -48,9 +48,18 @@ body
 {
   "username": "dom",
   "password": "123456",
-  "TOTP": "324321" // TOTP is optional, only require when 2fa is enabled
+  "TOTP": "324321" // code from authenticator app, is optional, only require when 2fa is enabled
 }
 ```
+
+#### Check 2FA Status 
+
+path
+```
+ /totp/check-2fa-status
+```
+ * Require Bearer token
+
 #### Request Authkey 
 
 path
