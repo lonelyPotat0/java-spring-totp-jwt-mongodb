@@ -41,10 +41,10 @@ public class AuthService {
 
     public ResponseEntity<?> createUser(SignupRequest signupRequest) throws Exception {
         if (!signupRequest.getUsername().matches("\\s*\\S+\\s*")) {
-            throw new Exception("Username must not include space");
+            return ResponseEntity.badRequest().body("Username must not include space");
         }
         if (this.usernameIsExist(signupRequest.getUsername())) {
-            throw new Exception("username already exist");
+            return ResponseEntity.badRequest().body("username already exist");
         }
         User user = new User();
         user.setAuthKey("");
@@ -57,7 +57,7 @@ public class AuthService {
             user.setAuthKey(this.totpTool.SecretGenerator());
         } catch (Exception error) {
             System.out.println("Error =====> " + error);
-            throw new Exception(error);
+            return ResponseEntity.badRequest().body(error);
         }
         user.setPassword(hashed);
         user.setTfa(false);
@@ -78,26 +78,26 @@ public class AuthService {
 
     public ResponseEntity<?> authenticateUser(LoginRequest loginRequest) throws Exception {
         if (!this.usernameIsExist(loginRequest.getUsername())) {
-            throw new Exception("username doesn't exist");
+            return ResponseEntity.badRequest().body("username doesn't exist");
         }
         User user = new User();
         try {
             user = userRepository.findByUsername(loginRequest.getUsername());
         } catch (Exception err) {
-            throw new Exception(err);
+            return ResponseEntity.badRequest().body(err);
         }
         System.out.println(user);
         Boolean verified = false;
         if (user.isTfa()) {
             if (loginRequest.getTOTP() == null || loginRequest.getTOTP() == "") {
                 System.out.println("=================> TOTP required");
-                throw new Exception("TOTP required");
+                return ResponseEntity.badRequest().body("TOTP required");
             }
             Boolean success = this.totpTool.verifyTOTP(user.getAuthKey(), loginRequest.getTOTP());
             if (success) {
                 verified = success;
             } else { 
-                throw new Exception("TOTP verify fail");
+                return ResponseEntity.badRequest().body("TOTP verify fail");
             }
         }
         if (BCrypt.checkpw(loginRequest.getPassword(), user.getPassword())) {

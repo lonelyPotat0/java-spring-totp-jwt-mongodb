@@ -25,7 +25,7 @@ public class TotpService {
         System.out.println(this.tokenTool.getUsernameFromToken(bearer));
         String username = this.tokenTool.getUsernameFromToken(bearer);
         if(!this.usernameIsExist(username)) {
-            throw new Exception("username does not exist");
+            return ResponseEntity.badRequest().body("username does not exist");
         }
         // return false;
         User user = userRepository.findByUsername(username);
@@ -44,7 +44,7 @@ public class TotpService {
         System.out.println(this.tokenTool.getUsernameFromToken(bearer));
         String username = this.tokenTool.getUsernameFromToken(bearer);
         if(!this.usernameIsExist(username)) {
-            throw new Exception("username does not exist");
+            return ResponseEntity.badRequest().body("username does not exist");
         } // return false;
         User user = userRepository.findByUsername(username);
         Boolean success = this.totpTool.verifyTOTP(user.getAuthKey(), totp);
