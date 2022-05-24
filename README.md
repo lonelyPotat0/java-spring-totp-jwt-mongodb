@@ -2,7 +2,7 @@
 
 ## Initiate project
 
-### First you'll need to install
+### First you may need to install
 <ul> 
 <li>docker</li>
 <li>docker-compose</li>
