@@ -60,7 +60,7 @@ path
 ```
  * Require Bearer token
 
-#### Request Authkey 
+#### Request Secret Key 
 
 path
 ```
