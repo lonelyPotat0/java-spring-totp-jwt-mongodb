@@ -1,19 +1,22 @@
-package com.example.demo.services;
+package com.example.demo.user.services;
 
-import com.example.demo.models.User;
-import com.example.demo.payload.Requests.LoginRequest;
-import com.example.demo.payload.Requests.SignupRequest;
-import com.example.demo.payload.Responses.JwtResponse;
-import com.example.demo.repositories.UserRepository;
 import com.example.demo.security.config.JwtTokenUtil;
 import com.example.demo.security.services.JwtUserDetailService;
 import com.example.demo.ultils.TOTPTool;
-
+import com.example.demo.ultils.TokenTool;
+import com.example.demo.user.models.User;
+import com.example.demo.user.payload.Requests.LoginRequest;
+import com.example.demo.user.payload.Requests.SignupRequest;
+import com.example.demo.user.payload.Responses.JwtResponse;
+import com.example.demo.user.payload.Responses.SecretKey;
+import com.example.demo.user.payload.Responses.TfaStatus;
+import com.example.demo.user.repositories.UserRepository;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
 
 // import dev.samstevens.totp.code.CodeGenerator;
 // import dev.samstevens.totp.code.CodeVerifier;
@@ -38,6 +41,7 @@ public class AuthService {
 	private JwtTokenUtil jwtTokenUtil;
 
     TOTPTool totpTool = new TOTPTool();
+    TokenTool tokenTool = new TokenTool();
 
     public ResponseEntity<?> createUser(SignupRequest signupRequest) throws Exception {
         if (!signupRequest.getUsername().matches("\\s*\\S+\\s*")) {
@@ -47,14 +51,14 @@ public class AuthService {
             return ResponseEntity.badRequest().body("username already exist");
         }
         User user = new User();
-        user.setAuthKey("");
+        user.setSecret("");
         user.setRole("ROLE_USER");
         user.setUsername(signupRequest.getUsername().toLowerCase());
         String hashed;
         System.out.println("password =====> " + signupRequest.getPassword());
         hashed = BCrypt.hashpw(signupRequest.getPassword(), BCrypt.gensalt(10));
         try {
-            user.setAuthKey(this.totpTool.SecretGenerator());
+            user.setSecret(this.totpTool.SecretGenerator());
         } catch (Exception error) {
             System.out.println("Error =====> " + error);
             return ResponseEntity.badRequest().body(error);
@@ -93,7 +97,7 @@ public class AuthService {
                 System.out.println("=================> TOTP required");
                 return ResponseEntity.badRequest().body("TOTP required");
             }
-            Boolean success = this.totpTool.verifyTOTP(user.getAuthKey(), loginRequest.getTOTP());
+            Boolean success = this.totpTool.verifyTOTP(user.getSecret(), loginRequest.getTOTP());
             if (success) {
                 verified = success;
             } else { 
@@ -119,12 +123,63 @@ public class AuthService {
         // return false;
     }
 
-    // public Boolean verifyTOTP(String secret, String code) {
-    //     TimeProvider timeProvider = new SystemTimeProvider();
-    //     CodeGenerator codeGenerator = new DefaultCodeGenerator();
-    //     CodeVerifier verifier = new DefaultCodeVerifier(codeGenerator, timeProvider);
-    //     return verifier.isValidCode(secret, code);
-    // }
+    public ResponseEntity<?> enableTFA(String bearer, String totp) throws Exception {
+        System.out.println(this.tokenTool.getUsernameFromToken(bearer));
+        String username = this.tokenTool.getUsernameFromToken(bearer);
+        if(!this.usernameIsExist(username)) {
+            return ResponseEntity.badRequest().body("username does not exist");
+        }
+        // return false;
+        User user = userRepository.findByUsername(username);
+        Boolean success = this.totpTool.verifyTOTP(user.getSecret(), totp);
+        System.out.println( "is success" + success);
+        if (success) {
+            user.setTfa(true);
+            userRepository.save(user);
+            return ResponseEntity.ok("success");
+        }
+        return ResponseEntity.badRequest().body("unsuccess");
+        // return false;
+    }
+
+    public ResponseEntity<?> disableTFA(String bearer, String totp) throws Exception {
+        System.out.println(this.tokenTool.getUsernameFromToken(bearer));
+        String username = this.tokenTool.getUsernameFromToken(bearer);
+        if(!this.usernameIsExist(username)) {
+            return ResponseEntity.badRequest().body("username does not exist");
+        } // return false;
+        User user = userRepository.findByUsername(username);
+        Boolean success = this.totpTool.verifyTOTP(user.getSecret(), totp);
+        System.out.println( "is success" + success);
+        if (success) {
+            user.setTfa(false);
+            user.setSecret(this.totpTool.SecretGenerator());
+            userRepository.save(user);
+            return ResponseEntity.ok("success");
+        }
+        return ResponseEntity.badRequest().body("unsuccess");
+        // return false;
+    }
+
+    public SecretKey getSecret(String bearer) throws Exception {
+        String username = this.tokenTool.getUsernameFromToken(bearer);
+        if(!this.usernameIsExist(username)) throw new Exception("username not found");
+        User user = userRepository.findByUsername(username);
+        SecretKey secret = new SecretKey(user.getSecret(), user.getUsername());
+        // secret.setSecret(user.getSecret());
+        // secret.setQrCodeFormat(username);
+        return secret;
+    }
+
+    public TfaStatus getEnableStatus(String bearer) throws Exception {
+        String username = this.tokenTool.getUsernameFromToken(bearer);
+        if(!this.usernameIsExist(username)) throw new Exception("username not found");
+        User user = userRepository.findByUsername(username);
+        TfaStatus status = new TfaStatus();
+        status.setEnabled(user.isTfa());
+        return status;
+    }
+
     private Boolean usernameIsExist(String username) {
         try {
             Boolean user = userRepository.existsByUsername(username);

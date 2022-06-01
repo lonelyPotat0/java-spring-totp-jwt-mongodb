@@ -56,7 +56,7 @@ body
 
 path
 ```
- /totp/check-2fa-status
+ /api/auth/check-2fa-status
 ```
  * Require Bearer token
 
@@ -64,7 +64,7 @@ path
 
 path
 ```
- /totp/request-authkey
+ /api/auth/request-secretkey
 ```
  * Require Bearer token
 
@@ -75,7 +75,7 @@ path
 
 path
 ```
- /totp/enable
+ /api/auth/enable
 ```
 body
 ```json
@@ -89,7 +89,7 @@ body
 
 path
 ```
- /totp/disable
+ /api/auth/disable
 ```
 body
 ```json

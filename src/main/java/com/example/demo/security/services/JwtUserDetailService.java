@@ -2,8 +2,8 @@ package com.example.demo.security.services;
 
 import java.util.Arrays;
 
-import com.example.demo.models.User;
-import com.example.demo.repositories.UserRepository;
+import com.example.demo.user.models.User;
+import com.example.demo.user.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

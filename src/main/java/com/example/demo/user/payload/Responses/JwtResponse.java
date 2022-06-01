@@ -1,4 +1,4 @@
-package com.example.demo.payload.Responses;
+package com.example.demo.user.payload.Responses;
 
 import java.io.Serializable;
 

@@ -1,4 +1,4 @@
-package com.example.demo.models;
+package com.example.demo.user.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -14,7 +14,7 @@ public class User {
     private String username;
     
     private String password;
-    private String authKey;
+    private String secret;
     private Boolean tfa;
     private String role;
     
@@ -64,15 +64,15 @@ public class User {
     /**
      * @return String return the authKey
      */
-    public String getAuthKey() {
-        return authKey;
+    public String getSecret() {
+        return secret;
     }
 
     /**
      * @param authKey the authKey to set
      */
-    public void setAuthKey(String authKey) {
-        this.authKey = authKey;
+    public void setSecret(String authKey) {
+        this.secret = authKey;
     }
 
     /**
@@ -105,7 +105,7 @@ public class User {
 
     @Override
     public String toString(){
-        return "id : " + this.id + " username : " + this.username + " TFA : " + this.tfa + " authKey :" + this.authKey + " role : " + this.role + " passsword : " + this.password;
+        return "id : " + this.id + " username : " + this.username + " TFA : " + this.tfa + " secret :" + this.secret + " role : " + this.role + " passsword : " + this.password;
     } 
 
 }

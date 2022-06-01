@@ -1,4 +1,4 @@
-package com.example.demo.payload.Responses;
+package com.example.demo.user.payload.Responses;
 
 public class TfaStatus {
     private Boolean enabled;

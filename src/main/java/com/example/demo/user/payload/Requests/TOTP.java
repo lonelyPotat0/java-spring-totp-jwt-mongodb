@@ -1,4 +1,4 @@
-package com.example.demo.payload.Requests;
+package com.example.demo.user.payload.Requests;
 
 public class TOTP {
     public String TOTP;
