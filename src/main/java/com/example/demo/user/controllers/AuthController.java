@@ -44,12 +44,12 @@ public class AuthController {
     }
 
 
-    @PostMapping("enable")
+    @PostMapping("enable-totp")
     public ResponseEntity<?> enableTOTP(@RequestHeader("Authorization") String bearer, @RequestBody TOTP totp) throws Exception {
         return this.authService.enableTFA(bearer, totp.getTOTP());
     }
 
-    @PostMapping("disable")
+    @PostMapping("disable-totp")
     public ResponseEntity<?> disableTOTP(@RequestHeader("Authorization") String bearer, @RequestBody TOTP totp) throws Exception {
         return this.authService.disableTFA(bearer, totp.getTOTP());
     }

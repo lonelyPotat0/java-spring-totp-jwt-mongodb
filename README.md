@@ -75,7 +75,7 @@ path
 
 path
 ```
- /api/auth/enable
+ /api/auth/enable-totp
 ```
 body
 ```json
@@ -89,7 +89,7 @@ body
 
 path
 ```
- /api/auth/disable
+ /api/auth/disable-totp
 ```
 body
 ```json
